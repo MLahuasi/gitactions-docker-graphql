@@ -32,12 +32,14 @@ jobs:
       run: |
         echo "Iniciando Build"
         docker build -t jmlahuasiq/gitactions-docker:0.0.1 .
+        docker build -t jmlahuasiq/gitactions-docker:latest .
         echo "Finalizando Build"
     # Subir Imagen a DockerHub
     - name: Push Docker Image
       run: |
         echo "Iniciando Push"
         docker push jmlahuasiq/gitactions-docker:0.0.1
+        docker push jmlahuasiq/gitactions-docker:latest
         echo "Finalizando Push"
 
 

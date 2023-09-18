@@ -27,6 +27,14 @@ jobs:
         echo "Iniciando Login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin Login"
+    # Contruir Imagen
+    - name: Build Docker Image
+      run: |
+        docker build -t jmlahuasiq/gitactions-docker:0.0.1 .
+    # Subir Imagen a DockerHub
+    - name: Push Docker Image
+      run: |
+        docker push -t jmlahuasiq/gitactions-docker:0.0.1 .
 
 
         

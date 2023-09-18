@@ -34,26 +34,28 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: | 
         echo "Iniciando Login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        echo "New version: $NEW_VERSION"
         echo "Fin Login"
-    # # Contruir Imagen
-    # - name: Build Docker Image
-    #   run: |
-    #     echo "Iniciando Build"
-    #     docker build -t jmlahuasiq/gitactions-docker:0.0.1 .
-    #     docker build -t jmlahuasiq/gitactions-docker:latest .
-    #     echo "Finalizando Build"
-    # # Subir Imagen a DockerHub
-    # - name: Push Docker Image
-    #   run: |
-    #     echo "Iniciando Push"
-    #     docker push jmlahuasiq/gitactions-docker:0.0.1
-    #     docker push jmlahuasiq/gitactions-docker:latest
-    #     echo "Finalizando Push"
+    # Contruir Imagen
+    - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        echo "Iniciando Build"
+        docker build -t jmlahuasiq/gitactions-docker:$NEW_VERSION .
+        docker build -t jmlahuasiq/gitactions-docker:latest .
+        echo "Finalizando Build"
+    # Subir Imagen a DockerHub
+    - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        echo "Iniciando Push"
+        docker push jmlahuasiq/gitactions-docker:$NEW_VERSION
+        docker push jmlahuasiq/gitactions-docker:latest
+        echo "Finalizando Push"
 
 
         
